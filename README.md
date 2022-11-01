@@ -6,6 +6,8 @@
 inside terminal launch:
 > faust -i -a faustMinimal.h reverb.dsp -o reverb.h 
 
+
+## Further reading
 for instructions on how to integrate your code inside JUCE [FAUST_Tutorial](https://faustdoc.grame.fr/workshops/2020-04-10-faust-juce/#simple-audio-effect-plug-in) \
 further reading on reverbs [SchroederReverberators](https://ccrma.stanford.edu/~jos/pasp/Schroeder_Reverberators.html)
 
