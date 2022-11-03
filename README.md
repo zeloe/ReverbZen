@@ -3,6 +3,7 @@
 ## Download Faust 
 [faustgitub](https://github.com/grame-cncm/faust) and follow the instructions inside the downloaded release.
 ## Compiling the Faust Code 
+[fausteffect](https://faustdoc.grame.fr/workshops/2020-04-10-faust-juce/#simple-audio-effect-plug-in) Tutorial for using faust code as effect. \
 inside terminal launch:
 > faust -i -a faustMinimal.h reverb.dsp -o reverb.h 
 
