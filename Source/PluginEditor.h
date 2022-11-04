@@ -28,11 +28,12 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ReverbZenAudioProcessor& audioProcessor;
-    juce::Zen_Knob decayKnob, dampKnob, mixKnob, erampKnob, erdelayKnob, predelayKnob;
-    juce::Label decayLabel, mixLabel, dampLabel, erampLabel, erdelayLabel, predelayLabel;
+    juce::Zen_Knob decayKnob, dampKnob, mixKnob, erampKnob, erdelayKnob, predelayKnob, highPassKnob;
+    juce::Label decayLabel, mixLabel, dampLabel, erampLabel, erdelayLabel, predelayLabel, highPassLabel;
     juce::AudioProcessorValueTreeState::SliderAttachment decayAttach, dampAttach, mixAttach,
-    erampAttach, erdelayAttach, preDelayAttach;
-    
+    erampAttach, erdelayAttach, preDelayAttach, highPassAttach;
+    juce::ToggleButton bypassButton, prepostButton;
+    juce::AudioProcessorValueTreeState::ButtonAttachment bypassAttach, prePostAttach;
     
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ReverbZenAudioProcessorEditor)

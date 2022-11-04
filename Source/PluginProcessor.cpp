@@ -30,6 +30,9 @@ ReverbZenAudioProcessor::ReverbZenAudioProcessor()
     treeState.addParameterListener("Eramp", this);
     treeState.addParameterListener("Mix", this);
     treeState.addParameterListener("Damp", this);
+    treeState.addParameterListener("HighpassFreq", this);
+    treeState.addParameterListener("Pre/Post", this);
+    treeState.addParameterListener("Bypass", this);
     
 }
 
@@ -41,6 +44,9 @@ ReverbZenAudioProcessor::~ReverbZenAudioProcessor()
     treeState.removeParameterListener("Eramp", this);
     treeState.removeParameterListener("Mix", this);
     treeState.removeParameterListener("Damp", this);
+    treeState.removeParameterListener("HighpassFreq", this);
+    treeState.removeParameterListener("Pre/Post", this);
+    treeState.removeParameterListener("Bypass", this);
 }
 juce::AudioProcessorValueTreeState::ParameterLayout
 ReverbZenAudioProcessor::createParameterLayout()
@@ -59,7 +65,11 @@ ReverbZenAudioProcessor::createParameterLayout()
     auto pDamp = (std::make_unique<juce::AudioParameterFloat>("Damp",
                                                             "Damp",0.01f,1.f,0.67f));
     
-   
+    auto pHighPassFreq(std::make_unique<juce::AudioParameterInt>("HighpassFreq","HighpassFreq", 20,20000,5000));
+    
+    auto pRouting(std::make_unique<juce::AudioParameterInt>("Pre/Post","Pre/Post", 0, 1, 0));
+    
+    auto pBypass(std::make_unique<juce::AudioParameterInt>("Bypass","Bypass", 0, 1 ,0));
     
     params.push_back(std::move(pReverb));
     params.push_back(std::move(pPreDelay));
@@ -67,7 +77,9 @@ ReverbZenAudioProcessor::createParameterLayout()
     params.push_back(std::move(pEramp));
     params.push_back(std::move(pDamp));
     params.push_back(std::move(pMix));
-    
+    params.push_back(std::move(pHighPassFreq));
+    params.push_back(std::move(pRouting));
+    params.push_back(std::move(pBypass));
     return {params.begin(),params.end()};
 }
 
@@ -97,6 +109,45 @@ void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, f
     {
         fUI->setParamValue("erdelay", newValue);
     }
+    
+    if (paramterID == "Pre/Post")
+    {
+        if (newValue == 0)
+        {
+            fUI->setParamValue("mixhighpassin", 1);
+            fUI->setParamValue("mixhighpassout", 0);
+        } else if (newValue == 1)
+        {
+            fUI->setParamValue("mixhighpassin", 0);
+            fUI->setParamValue("mixhighpassout", 1);
+        }
+    }
+    
+    if (paramterID == "Bypass")
+    {
+        if (newValue == 0)
+        {
+            if(treeState.getRawParameterValue("Pre/Post")->load() == 0)
+            {
+                fUI->setParamValue("mixhighpassin", 1);
+                fUI->setParamValue("mixhighpassout", 0);
+            } else if (treeState.getRawParameterValue("Pre/Post")->load() == 1)
+            {
+                fUI->setParamValue("mixhighpassin", 0);
+                fUI->setParamValue("mixhighpassout",1);
+            }
+        } else if(newValue == 1)
+        {
+            fUI->setParamValue("mixhighpassin", 0);
+            fUI->setParamValue("mixhighpassout", 0);
+        }
+        
+    }
+    if(paramterID == "HighpassFreq")
+    {
+        fUI->setParamValue("highpasscutoff", newValue);
+    }
+    
 }
 
 
@@ -109,7 +160,33 @@ void ReverbZenAudioProcessor::updateParameters()
     fUI->setParamValue("predelay", treeState.getRawParameterValue("PreDelay")->load());
     fUI->setParamValue("eramp", treeState.getRawParameterValue("Eramp")->load());
     fUI->setParamValue("erdelay", treeState.getRawParameterValue("ErDelay")->load());
-    
+    if(treeState.getRawParameterValue("Pre/Post")->load() == 0)
+    {
+        fUI->setParamValue("mixhighpassin", 1);
+        fUI->setParamValue("mixhighpassout", 0);
+    } else if (treeState.getRawParameterValue("Pre/Post")->load() == 1)
+    {
+        fUI->setParamValue("mixhighpassin", 0);
+        fUI->setParamValue("mixhighpassout",1);
+    }
+    if (treeState.getRawParameterValue("Bypass")->load() == 0)
+    {
+        if(treeState.getRawParameterValue("Pre/Post")->load() == 0)
+        {
+            fUI->setParamValue("mixhighpassin", 1);
+            fUI->setParamValue("mixhighpassout", 0);
+        } else if (treeState.getRawParameterValue("Pre/Post")->load() == 1)
+        {
+            fUI->setParamValue("mixhighpassin", 0);
+            fUI->setParamValue("mixhighpassout",1);
+        }
+    } else if(treeState.getRawParameterValue("Bypass")->load() == 1)
+    {
+        fUI->setParamValue("mixhighpassin", 0);
+        fUI->setParamValue("mixhighpassout", 0);
+    }
+    fUI->setParamValue("highpasscutoff", treeState.getRawParameterValue("HighpassFreq")->load());
+        
     
     
     

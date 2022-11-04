@@ -1,5 +1,12 @@
 import("stdfaust.lib");
 
+hipfilter(ct) = fi.highpass(1,fc)
+with {
+    fc = ct;
+};
+
+
+
 filters(dp) = fi.lowpass(1,fc1) , fi.lowpass(1,fc2), fi.lowpass(1,fc3), fi.lowpass(1,fc4),fi.lowpass(1,fc5), fi.lowpass(1,fc6), fi.lowpass(1,fc7), fi.lowpass(1,fc8)
 with {
 fc1 = (10000) * dp + 100;
@@ -69,10 +76,13 @@ with {
 
 
 predelay = nentry("predelay",1.0,0,1,0.01) : si.smoo;
+highpass = nentry("highpasscutoff", 5000,20,20000,1) : si.smoo;
 erdelay = nentry("erdelay",1.0,0,1,0.01) : si.smoo;
 eramp = nentry("eramp",1.0,0,1,0.01) : si.smoo;
 reflectionsdelay = nentry("reflectionsdelay",1.0,0,1,0.01) : si.smoo;
 decaydelay = nentry("decaydelay",1.0,0,1,0.01) : si.smoo;
 delaywet = nentry("delaywet",1.0,0,1,0.01) : si.smoo;
 damping = nentry("damp", 1.0,0,1,0.01) : si.smoo;
-process(x) = par(i,2, x <: filters(damping) : delay(predelay) : matrix <: allpass(erdelay) : feedback(decaydelay): matrix2(eramp) * delaywet , x*(1- delaywet) :> _);
+mixhighpassin = nentry("mixhighpassin", 0.5,0,1,0.01) :si.smoo;
+mixhighpassout = nentry("mixhighpassout", 0.5,0,1,0.01) :si.smoo;
+process(x) = par(i,2, x : hipfilter(highpass) * mixhighpassin + x * (1 - mixhighpassin) :> _ <: filters(damping) : delay(predelay) : matrix <: allpass(erdelay) : feedback(decaydelay): matrix2(eramp)  <: hipfilter(highpass) * mixhighpassout, _ *(1-mixhighpassout)  :> _ * delaywet + x *(1- delaywet)) : _,_;
