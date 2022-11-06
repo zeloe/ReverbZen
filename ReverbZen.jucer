@@ -8,12 +8,18 @@
       <FILE id="BDD9Kl" name="reverb.h" compile="0" resource="0" file="Source/reverb.h"/>
     </GROUP>
     <GROUP id="{F3A44FD9-B185-6CE2-9723-8926D2D5F73C}" name="Gui">
-      <FILE id="sLRGpd" name="Zen_Knob.cpp" compile="1" resource="0" file="Source/Zen_Knob.cpp"/>
-      <FILE id="tLizjY" name="Zen_Knob.h" compile="0" resource="0" file="Source/Zen_Knob.h"/>
-      <FILE id="YvByff" name="Zen_LookAndFeel.cpp" compile="1" resource="0"
-            file="Source/Zen_LookAndFeel.cpp"/>
-      <FILE id="l5UuB6" name="Zen_LookAndFeel.h" compile="0" resource="0"
-            file="Source/Zen_LookAndFeel.h"/>
+      <GROUP id="{EFA99DDB-3730-F8EC-F918-C337A35029F6}" name="ReverbVisualisation">
+        <FILE id="Umk8FU" name="Points.h" compile="0" resource="0" file="Source/Points.h"/>
+        <FILE id="pHHKny" name="ReverbVisual.h" compile="0" resource="0" file="Source/ReverbVisual.h"/>
+      </GROUP>
+      <GROUP id="{E64C6341-CAAE-AD23-ADAD-7BBE1F9D2B96}" name="CustonKnobs">
+        <FILE id="sLRGpd" name="Zen_Knob.cpp" compile="1" resource="0" file="Source/Zen_Knob.cpp"/>
+        <FILE id="tLizjY" name="Zen_Knob.h" compile="0" resource="0" file="Source/Zen_Knob.h"/>
+        <FILE id="YvByff" name="Zen_LookAndFeel.cpp" compile="1" resource="0"
+              file="Source/Zen_LookAndFeel.cpp"/>
+        <FILE id="l5UuB6" name="Zen_LookAndFeel.h" compile="0" resource="0"
+              file="Source/Zen_LookAndFeel.h"/>
+      </GROUP>
     </GROUP>
     <GROUP id="{88605CF8-CF0E-5DC9-8A05-FEDCC6DA00CD}" name="Source">
       <FILE id="wz0SU8" name="PluginProcessor.cpp" compile="1" resource="0"

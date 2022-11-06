@@ -27,12 +27,16 @@ erdelayAttach(audioProcessor.treeState, "ErDelay", erdelayKnob),
 preDelayAttach(audioProcessor.treeState, "PreDelay", predelayKnob),
 highPassAttach(audioProcessor.treeState, "HighpassFreq", highPassKnob),
 bypassAttach(audioProcessor.treeState, "Bypass", bypassButton),
-prePostAttach(audioProcessor.treeState, "Pre/Post", prepostButton)
+prePostAttach(audioProcessor.treeState, "Pre/Post", prepostButton),
+rv1(juce::Colours::red),
+rv2(juce::Colours::green),
+rv3(juce::Colours::blue)
 
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (1200,600);
+    setSize (1400,1400);
+    startTimerHz(33);
     decayKnob.setStyles(juce::Zen_Knob::ZenStyles::whiteknob);
     decayKnob.setTextValueSuffix(" %");
     decayLabel.setText("Decay", juce::dontSendNotification);
@@ -85,6 +89,10 @@ prePostAttach(audioProcessor.treeState, "Pre/Post", prepostButton)
     prepostButton.setButtonText("Pre/Post");
     addAndMakeVisible(&prepostButton);
     
+    addAndMakeVisible(&rv1);
+    addAndMakeVisible(&rv2);
+    addAndMakeVisible(&rv3);
+    
 }
 
 ReverbZenAudioProcessorEditor::~ReverbZenAudioProcessorEditor()
@@ -94,20 +102,33 @@ ReverbZenAudioProcessorEditor::~ReverbZenAudioProcessorEditor()
 //==============================================================================
 void ReverbZenAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    
+
     
     
 }
 
 void ReverbZenAudioProcessorEditor::resized()
 {
-    dampKnob.setBounds(50, 50, 150, 150);
-    predelayKnob.setBounds(250, 50, 150, 150);
-    erampKnob.setBounds(450, 50, 150, 150);
-    erdelayKnob.setBounds(650, 50, 150, 150);
-    decayKnob.setBounds(850, 50, 150, 150);
-    mixKnob.setBounds(1050,50,150,150);
-    highPassKnob.setBounds(50, 300, 150, 150);
-    bypassButton.setBounds(250, 300, 100, 100);
-    prepostButton.setBounds(450, 300, 100, 100);
+    
+    rv1.setBounds(50, 10, 300, 200);
+    rv2.setBounds(470,10 , 300, 200);
+    rv3.setBounds(880, 10, 300,200);
+    
+    
+    const int offset =  300;
+    dampKnob.setBounds(50, 50 +offset, 150, 150);
+    predelayKnob.setBounds(250, 50 +offset, 150, 150);
+    erampKnob.setBounds(450, 50 + offset, 150, 150);
+    erdelayKnob.setBounds(650, 50 +offset, 150 , 150);
+    decayKnob.setBounds(850, 50 +offset, 150 , 150);
+    mixKnob.setBounds(1050,50 +offset,150,150);
+    highPassKnob.setBounds(50, 300 +offset, 150, 150);
+    bypassButton.setBounds(250, 300 +offset, 100, 100);
+    prepostButton.setBounds(450, 300 +offset, 100, 100);
+}
+
+
+void ReverbZenAudioProcessorEditor::timerCallback()
+{
+    repaint();
 }

@@ -11,10 +11,11 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "Zen_Knob.h"
+#include "ReverbVisual.h"
 //==============================================================================
 /**
 */
-class ReverbZenAudioProcessorEditor  : public juce::AudioProcessorEditor
+class ReverbZenAudioProcessorEditor  : public juce::AudioProcessorEditor,public juce::Timer
 {
 public:
     ReverbZenAudioProcessorEditor (ReverbZenAudioProcessor&);
@@ -34,7 +35,7 @@ private:
     erampAttach, erdelayAttach, preDelayAttach, highPassAttach;
     juce::ToggleButton bypassButton, prepostButton;
     juce::AudioProcessorValueTreeState::ButtonAttachment bypassAttach, prePostAttach;
-    
-
+    ReverbVisual rv1,rv2,rv3;
+    void timerCallback() override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ReverbZenAudioProcessorEditor)
 };
