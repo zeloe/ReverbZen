@@ -14,18 +14,40 @@
 class ReverbVisual: public juce::Component,public juce::Timer
 {
 public:
-    ReverbVisual(juce::Colour colour,const float* setX,const float* addX, const float* addY):
+    ReverbVisual(juce::Colour colour,
+                 const float* setX,
+                 const float* addX,
+                 const float* addY,
+                 juce::RangedAudioParameter* _x1,
+                 juce::RangedAudioParameter* _y1
+                ):
+    x1(* _x1),
+    y1(* _y1),
+    attachX1(x1,[this](float){repaint();},nullptr),
+    attachY1(y1,[this](float){repaint();},nullptr),
     paintcolour(colour)
     {
+        attachX1.sendInitialUpdate();
+        attachY1.sendInitialUpdate();
+        
+        
+        setInterceptsMouseClicks(true, true);
+        startTimerHz(33);
         for (int i = 0; i < 8; i++)
         {
             points[i].setOffsetX(setX[i]);
             points[i].addOffsetX(addX[i]);
-            points[i].setOffsetY(addY[i]);
-            
+            points[i].getY(addY[i]);
+            points[i].getX(x1.getValue() - 0.01f);
         }
-        setInterceptsMouseClicks(true, true);
-        startTimerHz(33);
+        x1u =  juce::jlimit(5, 300 - 35, int(x1.getValue()) * 300);
+        y1u =   juce::jlimit(5, 200 - 35, int(y1.getValue() * 200));
+        DBG("INIT");
+        DBG(x1u);
+        DBG(y1u);
+        DBG(x1.getValue());
+        DBG(y1.getValue());
+        
     }
     ~ReverbVisual()
     {
@@ -38,16 +60,6 @@ public:
         
     }
    
-    void resized() override
-    {
-      
-       
-    }
-    
-    void mouseMove(const juce::MouseEvent &event) override
-    {
-            
-    }
     void mouseExit(const juce::MouseEvent &event) override
     {
         colour1 = juce::Colours::white;
@@ -55,18 +67,30 @@ public:
         {
             point.exit();
         }
+        
     }
     void mouseDrag (const juce::MouseEvent &event) override
     {
+        attachX1.beginGesture();
+        attachY1.beginGesture();
         
-        x1 =   juce::jlimit(5, getWidth() - 35, event.getPosition().getX());
-        y1 = juce::jlimit(5, getHeight() - 35, event.getPosition().getY());
+        x1u = juce::jlimit(5, getWidth() - 35, event.getPosition().getX());
+        y1u =juce::jlimit(5, getHeight() - 35, event.getPosition().getY());
+
         for(auto& point : points)
         {
-        point.getX(( float(x1) -0.01f) / (float(getWidth()) - 35.f));
+        point.getX(( float(x1u) -0.01f) / (float(getWidth()) - 35.f));
             
         }
-       
+        x1.setValueNotifyingHost((float(x1u)) / (float(getWidth())));
+        y1.setValueNotifyingHost((float(y1u)) / (float(getHeight())));
+        attachX1.endGesture();
+        attachY1.endGesture();
+        DBG("////////");
+        DBG(x1u);
+        DBG(y1u);
+        DBG(x1.getValue());
+        DBG(y1.getValue());
     }
     
     void mouseEnter(const juce::MouseEvent &event) override
@@ -90,14 +114,16 @@ public:
         
         
         g.setColour(colour1);
-        g.drawRect(x1, y1, 30, 30);
+        g.drawRect(x1u,y1u, 30, 30);
     }
     
     std::array<Points,8> points;
-    
+    juce::RangedAudioParameter &x1,&y1;
+    juce::ParameterAttachment attachX1,attachY1;
 private:
+   
     juce::Colour colour1 = juce::Colours::white;
     juce::Colour paintcolour;
-    int x1 = 20;
-    int y1 = 20;
+    int x1u;
+    int y1u;
 };

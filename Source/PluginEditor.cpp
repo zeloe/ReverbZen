@@ -22,15 +22,15 @@ highPassKnob("HighPass", 20, 20000, 1, 0),
 decayAttach(audioProcessor.treeState, "Reverb", decayKnob),
 dampAttach(audioProcessor.treeState, "Damp", dampKnob),
 mixAttach(audioProcessor.treeState, "Mix", mixKnob),
-erampAttach(audioProcessor.treeState, "Eramp", erampKnob),
+//erampAttach(audioProcessor.treeState, "Eramp", erampKnob),
 erdelayAttach(audioProcessor.treeState, "ErDelay", erdelayKnob),
-preDelayAttach(audioProcessor.treeState, "PreDelay", predelayKnob),
+//preDelayAttach(audioProcessor.treeState, "PreDelay", predelayKnob),
 highPassAttach(audioProcessor.treeState, "HighpassFreq", highPassKnob),
 bypassAttach(audioProcessor.treeState, "Bypass", bypassButton),
 prePostAttach(audioProcessor.treeState, "Pre/Post", prepostButton),
-rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,offsetY),
-rv2(juce::Colours::green,rv1SetOffsetX,rv1AddOffsetX,offsetY),
-rv3(juce::Colours::blue,rv1SetOffsetX,rv1AddOffsetX,offsetY)
+rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,offsetY,audioProcessor.treeState.getParameter("PreDelay"),audioProcessor.treeState.getParameter("Eramp"))
+//rv2(juce::Colours::green,rv1SetOffsetX,rv1AddOffsetX,offsetY,audioProcessor.treeState.getParameter("Predelay"),audioProcessor.treeState.getParameter("Predelay")),
+//rv3(juce::Colours::blue,rv1SetOffsetX,rv1AddOffsetX,offsetY,audioProcessor.treeState.getParameter("Predelay"),audioProcessor.treeState.getParameter("Predelay"))
 
 {
     // Make sure that before the constructor has finished, you've set the
@@ -91,20 +91,10 @@ rv3(juce::Colours::blue,rv1SetOffsetX,rv1AddOffsetX,offsetY)
     addAndMakeVisible(&prepostButton);
     
     addAndMakeVisible(&rv1);
-    addAndMakeVisible(&rv2);
-    addAndMakeVisible(&rv3);
+   // addAndMakeVisible(&rv2);
+   // addAndMakeVisible(&rv3);
     initPoints();
-    int counter = 0;
-    int offsety = 10;
-    for(auto& points : rv1.points)
-    {
-        DBG(rv1AddOffsetX[counter]);
-        points.setOffsetY(rv1SetOffsetX[counter]);
-        points.addOffsetX(rv1AddOffsetX[counter]);
-        points.getY(offsety);
-        counter += 1;
-        offsety += 20;
-    }
+    
     predelayKnob.onValueChange = [this] ()
     {
         /*
@@ -166,8 +156,8 @@ void ReverbZenAudioProcessorEditor::resized()
 {
     
     rv1.setBounds(50, 10, 300, 200);
-    rv2.setBounds(470,10 , 300, 200);
-    rv3.setBounds(880, 10, 300,200);
+//    rv2.setBounds(470,10 , 300, 200);
+ //   rv3.setBounds(880, 10, 300,200);
     
     
     const int offset =  300;

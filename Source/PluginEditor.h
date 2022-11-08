@@ -33,10 +33,10 @@ private:
     juce::Zen_Knob decayKnob, dampKnob, mixKnob, erampKnob, erdelayKnob, predelayKnob, highPassKnob;
     juce::Label decayLabel, mixLabel, dampLabel, erampLabel, erdelayLabel, predelayLabel, highPassLabel;
     juce::AudioProcessorValueTreeState::SliderAttachment decayAttach, dampAttach, mixAttach,
-    erampAttach, erdelayAttach, preDelayAttach, highPassAttach;
+     erdelayAttach, highPassAttach;
     juce::ToggleButton bypassButton, prepostButton;
     juce::AudioProcessorValueTreeState::ButtonAttachment bypassAttach, prePostAttach;
-    ReverbVisual rv1,rv2,rv3;
+    ReverbVisual rv1;//,rv2,rv3;
     void initPoints();
     void timerCallback() override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ReverbZenAudioProcessorEditor)

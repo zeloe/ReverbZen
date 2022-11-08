@@ -42,7 +42,7 @@ public:
     
     void setOffsetY(float offsetY)
     {
-        offSetY = offsetY;
+        this->offSetY = offsetY;
     }
     
     void setOffsetX(float offsetX)
@@ -52,7 +52,7 @@ public:
     
     void addOffsetX(float offsetX)
     {
-        addoffSetX = offsetX;
+        this->addoffSetX = offsetX;
     }
     
     void entered(const juce::Colour paintcolor)
@@ -68,7 +68,7 @@ private:
     juce::Colour paintcolor;
     float posX;
     float posY;
-    int size = 20;
+    float size = 20;
     float offSetY;
     float offSetX ;
     float addoffSetX;
