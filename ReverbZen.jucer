@@ -10,6 +10,7 @@
     <GROUP id="{F3A44FD9-B185-6CE2-9723-8926D2D5F73C}" name="Gui">
       <GROUP id="{EFA99DDB-3730-F8EC-F918-C337A35029F6}" name="ReverbVisualisation">
         <FILE id="Umk8FU" name="Points.h" compile="0" resource="0" file="Source/Points.h"/>
+        <FILE id="nYQyqp" name="Rectangle.h" compile="0" resource="0" file="Source/Rectangle.h"/>
         <FILE id="pHHKny" name="ReverbVisual.h" compile="0" resource="0" file="Source/ReverbVisual.h"/>
       </GROUP>
       <GROUP id="{E64C6341-CAAE-AD23-ADAD-7BBE1F9D2B96}" name="CustonKnobs">

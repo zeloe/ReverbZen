@@ -96,7 +96,8 @@ rv3(juce::Colours::blue)
     initPoints();
     predelayKnob.onValueChange = [this] ()
     {
-        rv1.point1.getX(((predelayKnob.getValue() - 0.01f) * 0.51 + 0.1 )  * 200 + 50 ); //510 max min 10
+        /*
+       // rv1.point1.getX(((predelayKnob.getValue() - 0.01f) * 0.51 + 0.1 )  * 200 + 50 ); //510 max min 10
         rv1.point2.getX(((predelayKnob.getValue() - 0.01f) * 0.53 + 0.2 ) * 200 + 50); // 540 max min 20
         rv1.point3.getX(((predelayKnob.getValue() - 0.01f) * 0.56 + 0.3 ) * 200 + 50); // 540 max min 30
         rv1.point4.getX(((predelayKnob.getValue() - 0.01f) * 0.51 + 0.1 ) * 200 + 50); // 510 max min 10
@@ -104,10 +105,12 @@ rv3(juce::Colours::blue)
         rv1.point6.getX(((predelayKnob.getValue() - 0.01f) * 0.61 + 0.2 ) * 200 + 50); // 610 max min 20
         rv1.point7.getX(((predelayKnob.getValue() - 0.01f) * 0.50 + 0.1 ) * 200 + 50); // 520 max min 10
         rv1.point8.getX(((predelayKnob.getValue() - 0.01f) * 0.52 + 0.2 ) * 200 + 50); // 540 max min 20
+         */
         
     };
     erdelayKnob.onValueChange = [this] ()
     {
+        /*
         rv2.point1.getX(((erdelayKnob.getValue() - 0.01f)* .56f +.02 )* 200 + 50);
         rv2.point2.getX(((erdelayKnob.getValue() - 0.01f)* .535f +.05 )* 200 + 50);
         rv2.point3.getX(((erdelayKnob.getValue() - 0.01f)* .548f + .08 )* 200 + 50);
@@ -116,12 +119,14 @@ rv3(juce::Colours::blue)
         rv2.point6.getX(((erdelayKnob.getValue() - 0.01f)* .57f + .11 )* 200 + 50);
         rv2.point7.getX(((erdelayKnob.getValue() - 0.01f)* .548f + .08 )* 200 + 50);
         rv2.point8.getX(((erdelayKnob.getValue() - 0.01f)* .535f + .1 )* 200 + 50);
+         */
     };
     
     
     
     decayKnob.onValueChange = [this]
     {
+        /*
         rv3.point1.getX(((decayKnob.getValue() - 0.01f)* .132f +.1 )* 200 + 50);
         rv3.point2.getX(((decayKnob.getValue() - 0.01f)* .125f +.05 )* 200 + 50);
         rv3.point3.getX(((decayKnob.getValue() - 0.01f)* .138f + .08 )* 200 + 50);
@@ -129,7 +134,8 @@ rv3(juce::Colours::blue)
         rv3.point5.getX(((decayKnob.getValue() - 0.01f)* .150f +.20 )* 200 + 50);
         rv3.point6.getX(((decayKnob.getValue() - 0.01f)* .150f + .10 )* 200 + 50);
         rv3.point7.getX(((decayKnob.getValue() - 0.01f)* .138f + .08 )* 200 + 50);
-        rv3.point8.getX(((decayKnob.getValue() - 0.01f)* .115f + .04 )* 200 + 50);  
+        rv3.point8.getX(((decayKnob.getValue() - 0.01f)* .115f + .04 )* 200 + 50);
+         */
         
     };
 }
@@ -173,6 +179,8 @@ void ReverbZenAudioProcessorEditor::timerCallback()
 
 void ReverbZenAudioProcessorEditor::initPoints()
 {
+    //stuff
+    /*
     rv1.point1.getX(((predelayKnob.getValue() - 0.01f) * 0.51 + 0.1 )  * 200 + 50 ); //510 max min 10
     rv1.point2.getX(((predelayKnob.getValue() - 0.01f) * 0.53 + 0.2 ) * 200 + 50); // 540 max min 20
     rv1.point3.getX(((predelayKnob.getValue() - 0.01f) * 0.55 + 0.3 ) * 200 + 50); // 540 max min 30
@@ -229,4 +237,5 @@ void ReverbZenAudioProcessorEditor::initPoints()
     rv3.point6.getY((110));
     rv3.point7.getY((130));
     rv3.point8.getY((150));
+     */
 }
