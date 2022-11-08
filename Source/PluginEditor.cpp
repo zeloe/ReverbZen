@@ -94,6 +94,9 @@ rv3(juce::Colours::blue)
     addAndMakeVisible(&rv2);
     addAndMakeVisible(&rv3);
     initPoints();
+    rv1.points[0].setOffsetX((0.51));
+    rv1.points[0].addOffsetX(0.1f);
+    rv1.points[0].getY(10);
     predelayKnob.onValueChange = [this] ()
     {
         /*

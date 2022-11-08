@@ -27,21 +27,34 @@ public:
     void paint(juce::Graphics& g)override
     {
         g.setColour(colour1);
-        g.fillEllipse(setx(),sety(),20 ,20);
-        g.drawEllipse(setx(),sety(),20 ,20,20);
+        g.fillEllipse(((setx() * offSetX) + addoffSetX) *200 + 50,sety(),20 ,20);
     }
     
     
-    void getX(int x)
+    void getX(float x)
     {
         posX = x;
     }
     
-    void getY(int y)
+    void getY(float y)
     {
         posY = y;
     }
     
+    void setOffsetY(float offsetY)
+    {
+        offSetY = offsetY;
+    }
+    
+    void setOffsetX(float offsetX)
+    {
+        offSetX = offsetX;
+    }
+    
+    void addOffsetX(float offsetX)
+    {
+        addoffSetX = offsetX;
+    }
     
     float setx()
     {
@@ -73,7 +86,9 @@ private:
     juce::Colour colour1 = juce::Colours::white;
     juce::Colour paintcolor;
     float posX = 80;
-    float posY = 80;
+    float posY;
     int size = 20;
-    
+    float offSetY = 0;
+    float offSetX = 0;
+    float addoffSetX = 0;
 };

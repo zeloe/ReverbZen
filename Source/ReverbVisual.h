@@ -15,12 +15,12 @@ class ReverbVisual: public juce::Component,public juce::Timer
 {
 public:
     ReverbVisual(juce::Colour colour):
-    colour1(colour)
+    paintcolour(colour)
     {
         //maybe only call listener on child components
         setInterceptsMouseClicks(true, true);
-        points[0].setAlwaysOnTop(true);
-        points[0].addMouseListener(this, false);
+        
+       // points[0].addMouseListener(this, false);
         
         startTimerHz(33);
     }
@@ -43,52 +43,42 @@ public:
     
     void mouseMove(const juce::MouseEvent &event) override
     {
-        
-        pos1.setBounds(points[0].setx(),points[0].sety(),40,40);
-        
-       
-       if(event.getEventRelativeTo(&points[0]).eventComponent->getBounds().contains(event.getPosition()))
-        {
-            points[0].entered(colour1);
-        } else {
-            //not sure about this
-            points[0].exit();
-        }
-        
+            
     }
     void mouseExit(const juce::MouseEvent &event) override
     {
-        
+        colour1 = juce::Colours::white;
+        points[0].exit();
     }
     void mouseDrag (const juce::MouseEvent &event) override
+    { //juce::jmap(<#Type sourceValue#>, <#Type sourceRangeMin#>, <#Type sourceRangeMax#>, <#Type targetRangeMin#>, <#Type targetRangeMax#>)
+        x1 =   juce::jlimit(5, getWidth() - 35, event.getPosition().getX());
+        y1 = juce::jlimit(5, getHeight() - 35, event.getPosition().getY());
+        points[0].getX(( float(x1) -0.01f) / (float(getWidth()) - 35.f));
+        //DBG( float(x1) / float(getWidth() - 35.f));
+    }
+    
+    void mouseEnter(const juce::MouseEvent &event) override
     {
-        if(event.getEventRelativeTo(&points[0]).eventComponent->getBounds().contains(event.getPosition()))
-         {
-             //not really working
-             points[0].mousePos(event.getPosition().getX(), event.getPosition().getY());
-             
-         }
-            
-         
+        colour1 = paintcolour;
+        points[0].entered(colour1);
+        
     }
     void paint(juce::Graphics& g) override
     {
         g.fillAll(juce::Colours::black);
         g.setColour(juce::Colours::white);
         g.drawRect(0,0,getWidth(),getHeight());
-        points[0].setBounds(points[0].setx(),points[0].sety(),20 ,20);
         points[0].paint(g);
+        g.setColour(colour1);
+        g.drawRect(x1, y1, 30, 30);
     }
     
     std::array<Points,2> points;
     
 private:
-    
-    Rect rect;
-    juce::Colour colour1;
+    juce::Colour colour1 = juce::Colours::white;
+    juce::Colour paintcolour;
     int x1 = 20;
     int y1 = 20;
-    juce::Rectangle<int> pos1;
-    
-     
 };
