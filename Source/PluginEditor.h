@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 #include "Zen_Knob.h"
 #include "ReverbVisual.h"
+#include "GuiDefines.h"
 //==============================================================================
 /**
 */

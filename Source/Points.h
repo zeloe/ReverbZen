@@ -16,7 +16,6 @@ public juce::Component
 public:
     Points()
     {
-    //   setInterceptsMouseClicks(true, false);
     }
     ~Points()
     {
@@ -27,7 +26,7 @@ public:
     void paint(juce::Graphics& g)override
     {
         g.setColour(colour1);
-        g.fillEllipse(((setx() * offSetX) + addoffSetX) *200 + 50,sety(),20 ,20);
+        g.fillEllipse(((posX * offSetX) + addoffSetX) *200.f + 50.f,posY,size ,size);
     }
     
     
@@ -48,31 +47,13 @@ public:
     
     void setOffsetX(float offsetX)
     {
-        offSetX = offsetX;
+        this->offSetX = offsetX;
     }
     
     void addOffsetX(float offsetX)
     {
         addoffSetX = offsetX;
     }
-    
-    float setx()
-    {
-        return posX;
-    }
-    float sety()
-    {
-        return posY;
-    }
-    
-    
-    void mousePos(float x, float y)
-    {
-         getX(x);
-         getY(y);
-        
-    }
-   
     
     void entered(const juce::Colour paintcolor)
     {
@@ -85,10 +66,10 @@ public:
 private:
     juce::Colour colour1 = juce::Colours::white;
     juce::Colour paintcolor;
-    float posX = 80;
+    float posX;
     float posY;
     int size = 20;
-    float offSetY = 0;
-    float offSetX = 0;
-    float addoffSetX = 0;
+    float offSetY;
+    float offSetX ;
+    float addoffSetX;
 };

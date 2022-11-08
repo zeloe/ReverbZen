@@ -8,6 +8,9 @@
       <FILE id="BDD9Kl" name="reverb.h" compile="0" resource="0" file="Source/reverb.h"/>
     </GROUP>
     <GROUP id="{F3A44FD9-B185-6CE2-9723-8926D2D5F73C}" name="Gui">
+      <GROUP id="{26A57426-A47B-D384-6B96-4CEB728DC9AD}" name="GuiDefines">
+        <FILE id="F6W6uK" name="GuiDefines.h" compile="0" resource="0" file="Source/GuiDefines.h"/>
+      </GROUP>
       <GROUP id="{EFA99DDB-3730-F8EC-F918-C337A35029F6}" name="ReverbVisualisation">
         <FILE id="Umk8FU" name="Points.h" compile="0" resource="0" file="Source/Points.h"/>
         <FILE id="nYQyqp" name="Rectangle.h" compile="0" resource="0" file="Source/Rectangle.h"/>

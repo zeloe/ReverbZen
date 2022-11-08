@@ -28,9 +28,9 @@ preDelayAttach(audioProcessor.treeState, "PreDelay", predelayKnob),
 highPassAttach(audioProcessor.treeState, "HighpassFreq", highPassKnob),
 bypassAttach(audioProcessor.treeState, "Bypass", bypassButton),
 prePostAttach(audioProcessor.treeState, "Pre/Post", prepostButton),
-rv1(juce::Colours::red),
-rv2(juce::Colours::green),
-rv3(juce::Colours::blue)
+rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,offsetY),
+rv2(juce::Colours::green,rv1SetOffsetX,rv1AddOffsetX,offsetY),
+rv3(juce::Colours::blue,rv1SetOffsetX,rv1AddOffsetX,offsetY)
 
 {
     // Make sure that before the constructor has finished, you've set the
@@ -94,9 +94,17 @@ rv3(juce::Colours::blue)
     addAndMakeVisible(&rv2);
     addAndMakeVisible(&rv3);
     initPoints();
-    rv1.points[0].setOffsetX((0.51));
-    rv1.points[0].addOffsetX(0.1f);
-    rv1.points[0].getY(10);
+    int counter = 0;
+    int offsety = 10;
+    for(auto& points : rv1.points)
+    {
+        DBG(rv1AddOffsetX[counter]);
+        points.setOffsetY(rv1SetOffsetX[counter]);
+        points.addOffsetX(rv1AddOffsetX[counter]);
+        points.getY(offsety);
+        counter += 1;
+        offsety += 20;
+    }
     predelayKnob.onValueChange = [this] ()
     {
         /*

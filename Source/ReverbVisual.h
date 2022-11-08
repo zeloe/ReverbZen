@@ -14,14 +14,17 @@
 class ReverbVisual: public juce::Component,public juce::Timer
 {
 public:
-    ReverbVisual(juce::Colour colour):
+    ReverbVisual(juce::Colour colour,const float* setX,const float* addX, const float* addY):
     paintcolour(colour)
     {
-        //maybe only call listener on child components
+        for (int i = 0; i < 8; i++)
+        {
+            points[i].setOffsetX(setX[i]);
+            points[i].addOffsetX(addX[i]);
+            points[i].setOffsetY(addY[i]);
+            
+        }
         setInterceptsMouseClicks(true, true);
-        
-       // points[0].addMouseListener(this, false);
-        
         startTimerHz(33);
     }
     ~ReverbVisual()
@@ -48,20 +51,31 @@ public:
     void mouseExit(const juce::MouseEvent &event) override
     {
         colour1 = juce::Colours::white;
-        points[0].exit();
+        for(auto& point : points)
+        {
+            point.exit();
+        }
     }
     void mouseDrag (const juce::MouseEvent &event) override
-    { //juce::jmap(<#Type sourceValue#>, <#Type sourceRangeMin#>, <#Type sourceRangeMax#>, <#Type targetRangeMin#>, <#Type targetRangeMax#>)
+    {
+        
         x1 =   juce::jlimit(5, getWidth() - 35, event.getPosition().getX());
         y1 = juce::jlimit(5, getHeight() - 35, event.getPosition().getY());
-        points[0].getX(( float(x1) -0.01f) / (float(getWidth()) - 35.f));
-        //DBG( float(x1) / float(getWidth() - 35.f));
+        for(auto& point : points)
+        {
+        point.getX(( float(x1) -0.01f) / (float(getWidth()) - 35.f));
+            
+        }
+       
     }
     
     void mouseEnter(const juce::MouseEvent &event) override
     {
         colour1 = paintcolour;
-        points[0].entered(colour1);
+        for(auto& point : points)
+        {
+            point.entered(colour1);
+        }
         
     }
     void paint(juce::Graphics& g) override
@@ -69,12 +83,17 @@ public:
         g.fillAll(juce::Colours::black);
         g.setColour(juce::Colours::white);
         g.drawRect(0,0,getWidth(),getHeight());
-        points[0].paint(g);
+        for(auto& point : points)
+        {
+            point.paint(g);
+        }
+        
+        
         g.setColour(colour1);
         g.drawRect(x1, y1, 30, 30);
     }
     
-    std::array<Points,2> points;
+    std::array<Points,8> points;
     
 private:
     juce::Colour colour1 = juce::Colours::white;
