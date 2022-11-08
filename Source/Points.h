@@ -14,17 +14,21 @@ class Points:
 public juce::Component
 {
 public:
-    Points(juce::Colour colour)
+    Points()
     {
-        colour1 = colour;
+    //   setInterceptsMouseClicks(true, false);
     }
-    ~Points(){};
+    ~Points()
+    {
+        
+    };
     
     
     void paint(juce::Graphics& g)override
     {
         g.setColour(colour1);
-        g.fillEllipse(posX,posY,size,size);
+        g.fillEllipse(setx(),sety(),20 ,20);
+        g.drawEllipse(setx(),sety(),20 ,20,20);
     }
     
     
@@ -38,10 +42,38 @@ public:
         posY = y;
     }
     
+    
+    float setx()
+    {
+        return posX;
+    }
+    float sety()
+    {
+        return posY;
+    }
+    
+    
+    void mousePos(float x, float y)
+    {
+         getX(x);
+         getY(y);
+        
+    }
+   
+    
+    void entered(const juce::Colour paintcolor)
+    {
+        colour1 = paintcolor;
+    }
+    void exit()
+    {
+        colour1 = juce::Colours::white;
+    }
 private:
-    juce::Colour colour1;
-    int posX = 0;
-    int posY = 0;
-    int size = 10;
+    juce::Colour colour1 = juce::Colours::white;
+    juce::Colour paintcolor;
+    float posX = 80;
+    float posY = 80;
+    int size = 20;
     
 };
