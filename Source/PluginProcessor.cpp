@@ -33,6 +33,7 @@ ReverbZenAudioProcessor::ReverbZenAudioProcessor()
     treeState.addParameterListener("HighpassFreq", this);
     treeState.addParameterListener("Pre/Post", this);
     treeState.addParameterListener("Bypass", this);
+    treeState.addParameterListener("Lowpass", this);
     
 }
 
@@ -47,6 +48,7 @@ ReverbZenAudioProcessor::~ReverbZenAudioProcessor()
     treeState.removeParameterListener("HighpassFreq", this);
     treeState.removeParameterListener("Pre/Post", this);
     treeState.removeParameterListener("Bypass", this);
+    treeState.removeParameterListener("Lowpass", this);
 }
 juce::AudioProcessorValueTreeState::ParameterLayout
 ReverbZenAudioProcessor::createParameterLayout()
@@ -56,6 +58,9 @@ ReverbZenAudioProcessor::createParameterLayout()
                                                             "Reverb",0.01f,1.f,0.75f));
     auto pPreDelay = (std::make_unique<juce::AudioParameterFloat>("PreDelay",
                                                             "PreDelay",0.01f,1.f,0.1f));
+    auto pLowpass = (std::make_unique<juce::AudioParameterFloat>("Lowpass",
+                                                            "Lowpass",0.01f,1.f,0.5f));
+    
     auto pErDelay = (std::make_unique<juce::AudioParameterFloat>("ErDelay",
                                                             "ErDelay",0.01f,1.f,0.1f));
     auto pEramp = (std::make_unique<juce::AudioParameterFloat>("Eramp",
@@ -73,6 +78,7 @@ ReverbZenAudioProcessor::createParameterLayout()
     
     params.push_back(std::move(pReverb));
     params.push_back(std::move(pPreDelay));
+    params.push_back(std::move(pLowpass));
     params.push_back(std::move(pErDelay));
     params.push_back(std::move(pEramp));
     params.push_back(std::move(pDamp));
@@ -146,6 +152,11 @@ void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, f
     if(paramterID == "HighpassFreq")
     {
         fUI->setParamValue("highpasscutoff", newValue);
+    }
+    
+    if(paramterID == "Lowpass")
+    {
+        fUI->setParamValue("lowpassfc", newValue);
     }
     
 }

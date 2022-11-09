@@ -20,7 +20,6 @@ public:
     
     void paint(juce::Graphics& g )override
     {
-        g.fillAll(juce::Colours::black);
         g.setColour(juce::Colours::white);
         g.drawRect(0,0,getParentWidth(),getParentHeight());
     }

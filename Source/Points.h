@@ -26,7 +26,7 @@ public:
     void paint(juce::Graphics& g)override
     {
         g.setColour(colour1);
-        g.fillEllipse(((posX * offSetX) + addoffSetX) *200.f + 50.f,posY,size ,size);
+        g.fillEllipse(((posX * offSetX) + addoffSetX) * float(getParentWidth() - getParentWidth() / 10),(((1.f -posY)* offSetY) + offaddSetY ) *(float(getParentHeight()- getParentHeight() / 10)),float(getParentWidth() / 25) ,float(getParentHeight() / 25));
     }
     
     
@@ -43,6 +43,11 @@ public:
     void setOffsetY(float offsetY)
     {
         this->offSetY = offsetY;
+    }
+    
+    void addOffsetY(float offsetY)
+    {
+        this->offaddSetY = offsetY;
     }
     
     void setOffsetX(float offsetX)
@@ -64,6 +69,7 @@ public:
         colour1 = juce::Colours::white;
     }
 private:
+    juce::Rectangle<float> rect;
     juce::Colour colour1 = juce::Colours::white;
     juce::Colour paintcolor;
     float posX;
@@ -72,4 +78,6 @@ private:
     float offSetY;
     float offSetX ;
     float addoffSetX;
+    float offaddSetY;
+    
 };

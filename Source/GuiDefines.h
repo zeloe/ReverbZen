@@ -23,25 +23,38 @@ const  float  rv1SetOffsetX [8]
 };
 const  float rv1AddOffsetX [8]
 {
-    0.1,
+    0.15,
     0.2,
     0.3,
-    0.1,
+    0.15,
     0.2,
     0.2,
-    0.1,
+    0.15,
     0.2
 };
 
 
-const  float offsetY [8]
+const  float rv1offsetY [8]
 {
-    10,
-    30,
-    50,
-    70,
-    90,
-    110,
-    130,
-    150
+    .95,
+    .90,
+    .85,
+    .80,
+    .75,
+    .70,
+    .60,
+    .55
+};
+
+
+const  float rv1AddOffsetY [8]
+{
+    .01,
+    .02,
+    .03,
+    .04,
+    .05,
+    .06,
+    .07,
+    .08
 };

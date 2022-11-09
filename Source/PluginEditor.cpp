@@ -28,7 +28,7 @@ erdelayAttach(audioProcessor.treeState, "ErDelay", erdelayKnob),
 highPassAttach(audioProcessor.treeState, "HighpassFreq", highPassKnob),
 bypassAttach(audioProcessor.treeState, "Bypass", bypassButton),
 prePostAttach(audioProcessor.treeState, "Pre/Post", prepostButton),
-rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,offsetY,audioProcessor.treeState.getParameter("PreDelay"),audioProcessor.treeState.getParameter("Eramp"))
+rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,rv1offsetY,rv1AddOffsetY,audioProcessor.treeState.getParameter("PreDelay"),audioProcessor.treeState.getParameter("Lowpass"))
 //rv2(juce::Colours::green,rv1SetOffsetX,rv1AddOffsetX,offsetY,audioProcessor.treeState.getParameter("Predelay"),audioProcessor.treeState.getParameter("Predelay")),
 //rv3(juce::Colours::blue,rv1SetOffsetX,rv1AddOffsetX,offsetY,audioProcessor.treeState.getParameter("Predelay"),audioProcessor.treeState.getParameter("Predelay"))
 
@@ -36,6 +36,9 @@ rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,offsetY,audioProcessor.treeSt
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (1400,1400);
+    setResizable(true, true);
+    setResizeLimits(700, 700,1400,1400);
+    getConstrainer()->setFixedAspectRatio(1.0);
     startTimerHz(33);
     decayKnob.setStyles(juce::Zen_Knob::ZenStyles::whiteknob);
     decayKnob.setTextValueSuffix(" %");
@@ -154,8 +157,9 @@ void ReverbZenAudioProcessorEditor::paint (juce::Graphics& g)
 
 void ReverbZenAudioProcessorEditor::resized()
 {
-    
-    rv1.setBounds(50, 10, 300, 200);
+    const int offsetW = getLocalBounds().getWidth();
+    const int offsetW3 = offsetW / 3;
+    rv1.setBounds(offsetW3, 10, offsetW3, offsetW3);
 //    rv2.setBounds(470,10 , 300, 200);
  //   rv3.setBounds(880, 10, 300,200);
     

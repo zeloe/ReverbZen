@@ -17,6 +17,7 @@ public:
     ReverbVisual(juce::Colour colour,
                  const float* setX,
                  const float* addX,
+                 const float* setY,
                  const float* addY,
                  juce::RangedAudioParameter* _x1,
                  juce::RangedAudioParameter* _y1
@@ -36,11 +37,14 @@ public:
         {
             points[i].setOffsetX(setX[i]);
             points[i].addOffsetX(addX[i]);
-            points[i].getY(addY[i]);
+            points[i].setOffsetY(setY[i]);
+            points[i].addOffsetY(addY[i]);
             points[i].getX(x1.getValue() - 0.01f);
+            points[i].getY(y1.getValue() - 0.01f);
+            addAndMakeVisible(points[i]);
         }
      
-       
+      
     }
     ~ReverbVisual()
     {
@@ -66,22 +70,14 @@ public:
         attachX1.beginGesture();
         attachY1.beginGesture();
         
-      //  x1u = juce::jlimit(5.f, float(300.f) - 35.f, float(event.getPosition().getX()));
-      //  y1u =juce::jlimit(5.f, float(200.f) - 35.f, float(event.getPosition().getY()));
-        x1.setValueNotifyingHost((float(event.getPosition().getX())) / (float(300.f) -35.f));
-        y1.setValueNotifyingHost((float(event.getPosition().getY())) / (float(200.f) -35.f));
+    
+        x1.setValueNotifyingHost((float(event.getPosition().getX())) / (float(getLocalBounds().getWidth())));
+        y1.setValueNotifyingHost((float(event.getPosition().getY())) / (float(getLocalBounds().getHeight())));
         
         
         attachX1.endGesture();
         attachY1.endGesture();
-        /*
-        DBG("SET");
-        DBG(x1u);
-        DBG(y1u);
-        DBG(x1.getValue());
-        DBG(y1.getValue());
-        DBG("///////");
-         */
+       
     }
     
     void mouseEnter(const juce::MouseEvent &event) override
@@ -105,23 +101,32 @@ public:
         
         
         g.setColour(colour1);
-        g.drawRect(juce::jlimit(5.f, float(300.f) - 35.f, x1.getValue() * (300.f - 35.f)),
-                   juce::jlimit(5.f, float(200.f) - 35.f, y1.getValue() * (300.f - 35.f)), size, size);
+        g.drawRect(juce::jlimit(5.f, float(getLocalBounds().getWidth()) - float(xyrect.getWidth() + 5.f), x1.getValue() * (float(getLocalBounds().getWidth()))),
+                   juce::jlimit(5.f, float(getLocalBounds().getHeight()) -float(xyrect.getHeight() + 5.f), y1.getValue() * (float(getLocalBounds().getHeight()))),float(getLocalBounds().getWidth() / 10) , float(getLocalBounds().getWidth() / 10));
         for(auto& point : points)
         {
-        point.getX(( float(x1.getValue()) -0.01f));
-            
+        point.getX(x1.getValue() -0.01f);
+        point.getY(y1.getValue() - 0.01f);
         }
     }
     
-    
+    void resized() override
+    {
+        for(auto& point : points)
+        {
+            point.setBounds((float(x1.getValue()) -0.01f),float(y1.getValue() -0.01f), float(getLocalBounds().getWidth() / 25) ,float(getLocalBounds().getHeight() / 25));
+        }
+        xyrect.setBounds(juce::jlimit(5.f, float(getLocalBounds().getWidth()) - 35.f, x1.getValue() * (float(getLocalBounds().getWidth()))),
+        juce::jlimit(5.f, float(getLocalBounds().getHeight()) - 35.f, y1.getValue() * (float(getLocalBounds().getHeight()))), float(getLocalBounds().getWidth() / 10), float(getLocalBounds().getHeight() / 10));
+    }
+   
     
     
     std::array<Points,8> points;
     juce::RangedAudioParameter &x1,&y1;
     juce::ParameterAttachment attachX1,attachY1;
 private:
-   
+    juce::Rectangle <float> xyrect;
     juce::Colour colour1 = juce::Colours::white;
     juce::Colour paintcolour;
     float x1u;

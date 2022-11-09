@@ -68,6 +68,17 @@ with {
 
 };
 
+lowpass(fc) = fi.lowpass(1,f1),fi.lowpass(1,f2),fi.lowpass(1,f3),fi.lowpass(1,f4),fi.lowpass(1,f5),fi.lowpass(1,f6),fi.lowpass(1,f7),fi.lowpass(1,f8), _
+with {
+    f1 = fc * 19000 + 10;
+    f2 = fc * 19000 + 20;
+    f3 = fc * 19000 + 30;
+    f4 = fc * 19000 + 40;
+    f5 = fc * 19000 + 50;
+    f6 = fc * 19000 + 60;
+    f7 = fc * 19000 + 70;
+    f8 = fc * 19000 + 80;
+};
 
 
 
@@ -77,6 +88,7 @@ with {
 
 predelay = nentry("predelay",1.0,0,1,0.01) : si.smoo;
 highpass = nentry("highpasscutoff", 5000,20,20000,1) : si.smoo;
+lowpassfc = nentry("lowpassfc",1.0,0,1,0.01) : si.smoo;
 erdelay = nentry("erdelay",1.0,0,1,0.01) : si.smoo;
 eramp = nentry("eramp",1.0,0,1,0.01) : si.smoo;
 reflectionsdelay = nentry("reflectionsdelay",1.0,0,1,0.01) : si.smoo;
@@ -85,4 +97,4 @@ delaywet = nentry("delaywet",1.0,0,1,0.01) : si.smoo;
 damping = nentry("damp", 1.0,0,1,0.01) : si.smoo;
 mixhighpassin = nentry("mixhighpassin", 0.5,0,1,0.01) :si.smoo;
 mixhighpassout = nentry("mixhighpassout", 0.5,0,1,0.01) :si.smoo;
-process(x) = par(i,2, x : hipfilter(highpass) * mixhighpassin + x * (1 - mixhighpassin) :> _ <: filters(damping) : delay(predelay) : matrix <: allpass(erdelay) : feedback(decaydelay): matrix2(eramp)  <: hipfilter(highpass) * mixhighpassout, _ *(1-mixhighpassout)  :> _ * delaywet + x *(1- delaywet)) : _,_;
+process(x) = par(i,2, x : hipfilter(highpass) * mixhighpassin + x * (1 - mixhighpassin) :> _ <: filters(damping) : delay(predelay)  :matrix  <: allpass(erdelay) : lowpass(lowpassfc) : feedback(decaydelay): matrix2(eramp)  <: hipfilter(highpass) * mixhighpassout, _ *(1-mixhighpassout)  :> _ * delaywet + x *(1- delaywet)) : _,_;
