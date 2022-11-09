@@ -30,7 +30,6 @@ public:
         attachX1.sendInitialUpdate();
         attachY1.sendInitialUpdate();
         
-        
         setInterceptsMouseClicks(true, true);
         startTimerHz(33);
         for (int i = 0; i < 8; i++)
@@ -40,18 +39,11 @@ public:
             points[i].getY(addY[i]);
             points[i].getX(x1.getValue() - 0.01f);
         }
-        x1u = int(x1.getValue() * (300.f -35.f));
-        y1u = int(y1.getValue() * (200.f - 35.f)); 
-        DBG("INIT");
-        DBG(x1u);
-        DBG(y1u);
-        DBG(x1.getValue());
-        DBG(y1.getValue());
-        DBG("/////");
+       
+       
     }
     ~ReverbVisual()
     {
-      
     }
     
     void timerCallback() override
@@ -74,23 +66,26 @@ public:
         attachX1.beginGesture();
         attachY1.beginGesture();
         
-        x1u = juce::jlimit(5.f, float(300.f) - 35.f, float(event.getPosition().getX()));
-        y1u =juce::jlimit(5.f, float(200.f) - 35.f, float(event.getPosition().getY()));
+      //  x1u = juce::jlimit(5.f, float(300.f) - 35.f, float(event.getPosition().getX()));
+      //  y1u =juce::jlimit(5.f, float(200.f) - 35.f, float(event.getPosition().getY()));
+        x1.setValueNotifyingHost((float(event.getPosition().getX())) / (float(300.f) -35.f));
+        y1.setValueNotifyingHost((float(event.getPosition().getY())) / (float(200.f) -35.f));
         for(auto& point : points)
         {
-        point.getX(( float(x1u) -0.01f) / (float(300.f) - 35.f));
+        point.getX(( float(x1.getValue()) -0.01f));
             
         }
-        x1.setValueNotifyingHost((float(x1u)) / (float(300.f) -35.f));
-        y1.setValueNotifyingHost((float(y1u)) / (float(200.f) -35.f));
+        
         attachX1.endGesture();
         attachY1.endGesture();
+        /*
         DBG("SET");
         DBG(x1u);
         DBG(y1u);
         DBG(x1.getValue());
         DBG(y1.getValue());
         DBG("///////");
+         */
     }
     
     void mouseEnter(const juce::MouseEvent &event) override
@@ -114,7 +109,19 @@ public:
         
         
         g.setColour(colour1);
-        g.drawRect(x1u,y1u, size, size);
+        g.drawRect(juce::jlimit(5.f, float(300.f) - 35.f, x1.getValue() * (300.f - 35.f)),
+                   juce::jlimit(5.f, float(200.f) - 35.f, y1.getValue() * (300.f - 35.f)), size, size);
+    }
+    
+    void getModulation()
+    {
+        attachX1.beginGesture();
+        for(auto& point : points)
+        {
+        point.getX(( float(x1.getValue()) -0.01f));
+            
+        }
+        attachX1.endGesture();
     }
     
     std::array<Points,8> points;
@@ -127,4 +134,6 @@ private:
     float x1u;
     float y1u;
     float size = 30;
+    
+    
 };
