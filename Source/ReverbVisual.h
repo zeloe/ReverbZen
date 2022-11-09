@@ -39,7 +39,7 @@ public:
             points[i].getY(addY[i]);
             points[i].getX(x1.getValue() - 0.01f);
         }
-       
+     
        
     }
     ~ReverbVisual()
@@ -70,11 +70,7 @@ public:
       //  y1u =juce::jlimit(5.f, float(200.f) - 35.f, float(event.getPosition().getY()));
         x1.setValueNotifyingHost((float(event.getPosition().getX())) / (float(300.f) -35.f));
         y1.setValueNotifyingHost((float(event.getPosition().getY())) / (float(200.f) -35.f));
-        for(auto& point : points)
-        {
-        point.getX(( float(x1.getValue()) -0.01f));
-            
-        }
+        
         
         attachX1.endGesture();
         attachY1.endGesture();
@@ -111,18 +107,15 @@ public:
         g.setColour(colour1);
         g.drawRect(juce::jlimit(5.f, float(300.f) - 35.f, x1.getValue() * (300.f - 35.f)),
                    juce::jlimit(5.f, float(200.f) - 35.f, y1.getValue() * (300.f - 35.f)), size, size);
-    }
-    
-    void getModulation()
-    {
-        attachX1.beginGesture();
         for(auto& point : points)
         {
         point.getX(( float(x1.getValue()) -0.01f));
             
         }
-        attachX1.endGesture();
     }
+    
+    
+    
     
     std::array<Points,8> points;
     juce::RangedAudioParameter &x1,&y1;
