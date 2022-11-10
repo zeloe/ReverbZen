@@ -1,5 +1,8 @@
 # ReverbZen 
- A Reverb written with Faust 
+A Reverb written with Faust and JUCE, based on [SchroederReverberators](https://ccrma.stanford.edu/~jos/pasp/Schroeder_Reverberators.html). \
+This reverb effect uses different stages. It splits input signal in parallel and uses different types of delaylines. \
+Different filters are provided to get rid of unwanted resonances. \
+Check out reverb.dsp file to get more detailed insight.
 ## Download Faust 
 [faustgitub](https://github.com/grame-cncm/faust) and follow the instructions inside the downloaded release.
 ## Compiling the Faust Code 
@@ -33,10 +36,10 @@ Decay = Feedback Amount
 
 ## Further reading
 for instructions on how to integrate your code inside JUCE [FAUST_Tutorial](https://faustdoc.grame.fr/workshops/2020-04-10-faust-juce/#simple-audio-effect-plug-in) \
-further reading on reverbs [SchroederReverberators](https://ccrma.stanford.edu/~jos/pasp/Schroeder_Reverberators.html) \
-This project was based on SchroederReverberators.
-
+## For more amazing projects
+[Made-With-Faust](https://faust.grame.fr/community/made-with-faust/)
 ## How it looks
 
 <img width="855" alt="Full" src="https://user-images.githubusercontent.com/54742442/201083605-d49d008e-1a35-48da-bace-931e8e4fe1ba.png">
+
 
