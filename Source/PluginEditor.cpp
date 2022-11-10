@@ -69,7 +69,17 @@ rv2(juce::Colours::green,rv2SetOffsetX,rv2AddOffsetX,rv2offsetY,rv2AddOffsetY,au
     prepostButton.setButtonText("Pre/Post");
     addAndMakeVisible(&prepostButton);
     
+    preDelayLabel.setText("PreDelay", juce::dontSendNotification);
+    preDelayLabel.attachToComponent(&rv1, true);
+    lowpassLabel.setText("LowPassFrequency", juce::dontSendNotification);
+    lowpassLabel.attachToComponent(&rv1, false);
+    
     addAndMakeVisible(&rv1);
+    
+    dampLabel.setText("Damp", juce::dontSendNotification);
+    dampLabel.attachToComponent(&rv2, false);
+    earlyDelayLabel.setText("EarlyReflectionsDelay", juce::dontSendNotification);
+    earlyDelayLabel.attachToComponent(&rv2, true);
     addAndMakeVisible(&rv2);
 }
 

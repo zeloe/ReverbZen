@@ -31,7 +31,7 @@ private:
     // access the processor object that created it.
     ReverbZenAudioProcessor& audioProcessor;
     juce::Zen_Knob decayKnob, mixKnob, erampKnob, highPassKnob;
-    juce::Label decayLabel, mixLabel, dampLabel, erampLabel, highPassLabel;
+    juce::Label decayLabel, mixLabel, dampLabel, erampLabel, highPassLabel, lowpassLabel, preDelayLabel, earlyDelayLabel;
     juce::AudioProcessorValueTreeState::SliderAttachment decayAttach, mixAttach,erAmpAttach,highPassAttach;
     juce::ToggleButton bypassButton, prepostButton;
     juce::AudioProcessorValueTreeState::ButtonAttachment bypassAttach, prePostAttach;
