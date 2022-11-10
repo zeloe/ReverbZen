@@ -2,7 +2,7 @@
 A Reverb written with Faust and JUCE, based on [SchroederReverberators](https://ccrma.stanford.edu/~jos/pasp/Schroeder_Reverberators.html). \
 This reverb effect uses different stages. It splits input signal in parallel and uses different types of delaylines. \
 Different filters are provided to get rid of unwanted resonances. \
-Check out reverb.dsp file to get more detailed insight.
+Check out [reverb.dsp](/Source/reverb.dsp) file to get more detailed insight.
 ## Download Faust 
 [faustgitub](https://github.com/grame-cncm/faust) and follow the instructions inside the downloaded release.
 ## Compiling the Faust Code 
