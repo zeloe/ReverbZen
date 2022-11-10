@@ -35,7 +35,7 @@ Decay = Feedback Amount
 
 
 ## Further reading
-for instructions on how to integrate your code inside JUCE [FAUST_Tutorial](https://faustdoc.grame.fr/workshops/2020-04-10-faust-juce/#simple-audio-effect-plug-in) \
+for instructions on how to integrate your code inside JUCE [FAUST_Tutorial](https://faustdoc.grame.fr/workshops/2020-04-10-faust-juce/#simple-audio-effect-plug-in) 
 ## For more amazing projects
 [Made-With-Faust](https://faust.grame.fr/community/made-with-faust/)
 ## How it looks
