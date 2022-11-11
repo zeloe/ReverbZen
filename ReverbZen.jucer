@@ -4,6 +4,9 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               pluginManufacturer="CodeZen" pluginFormats="buildVST3">
   <MAINGROUP id="xWPxCJ" name="ReverbZen">
+    <GROUP id="{683E8D7B-6D30-12D4-CDCC-EB6D07A45081}" name="Parameters">
+      <FILE id="FW6Zy0" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
+    </GROUP>
     <GROUP id="{2E793CDD-3F26-7B0C-2173-5398C7787BEA}" name="DSP">
       <FILE id="BDD9Kl" name="reverb.h" compile="0" resource="0" file="Source/reverb.h"/>
     </GROUP>

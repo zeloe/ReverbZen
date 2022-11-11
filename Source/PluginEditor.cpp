@@ -16,14 +16,14 @@ decayKnob("Decay", 0, 1, 0.01, 0),
 mixKnob("Mix", 0, 1, 0.01, 0),
 erampKnob("Eramp", 0, 1, 0.01, 0),
 highPassKnob("HighPass", 20, 20000, 1, 0),
-decayAttach(audioProcessor.treeState, "Reverb", decayKnob),
-mixAttach(audioProcessor.treeState, "Mix", mixKnob),
-erAmpAttach(audioProcessor.treeState, "Eramp", erampKnob),
-highPassAttach(audioProcessor.treeState, "HighpassFreq", highPassKnob),
-bypassAttach(audioProcessor.treeState, "Bypass", bypassButton),
-prePostAttach(audioProcessor.treeState, "Pre/Post", prepostButton),
-rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,rv1offsetY,rv1AddOffsetY,audioProcessor.treeState.getParameter("PreDelay"),audioProcessor.treeState.getParameter("Damp")),
-rv2(juce::Colours::green,rv2SetOffsetX,rv2AddOffsetX,rv2offsetY,rv2AddOffsetY,audioProcessor.treeState.getParameter("ErDelay"),audioProcessor.treeState.getParameter("Lowpass"))
+decayAttach(audioProcessor.treeState, sReverb, decayKnob),
+mixAttach(audioProcessor.treeState, sMix, mixKnob),
+erAmpAttach(audioProcessor.treeState, sEramp, erampKnob),
+highPassAttach(audioProcessor.treeState, sHighPassFreq, highPassKnob),
+bypassAttach(audioProcessor.treeState, sBypass, bypassButton),
+prePostAttach(audioProcessor.treeState, sPrePost, prepostButton),
+rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,rv1offsetY,rv1AddOffsetY,audioProcessor.treeState.getParameter(sPreDelay),audioProcessor.treeState.getParameter(sLowpass)),
+rv2(juce::Colours::green,rv2SetOffsetX,rv2AddOffsetX,rv2offsetY,rv2AddOffsetY,audioProcessor.treeState.getParameter(sErDelay),audioProcessor.treeState.getParameter(sDamp))
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.

@@ -23,58 +23,58 @@ ReverbZenAudioProcessor::ReverbZenAudioProcessor()
 ,treeState(*this, nullptr, "PARAMETERS", createParameterLayout())
 #endif
 {
-    
-    treeState.addParameterListener("Reverb", this);
-    treeState.addParameterListener("PreDelay", this);
-    treeState.addParameterListener("ErDelay", this);
-    treeState.addParameterListener("Eramp", this);
-    treeState.addParameterListener("Mix", this);
-    treeState.addParameterListener("Damp", this);
-    treeState.addParameterListener("HighpassFreq", this);
-    treeState.addParameterListener("Pre/Post", this);
-    treeState.addParameterListener("Bypass", this);
-    treeState.addParameterListener("Lowpass", this);
+    aReverb = treeState.getRawParameterValue(sReverb);
+    treeState.addParameterListener(sReverb, this);
+    treeState.addParameterListener(sPreDelay, this);
+    treeState.addParameterListener(sErDelay, this);
+    treeState.addParameterListener(sEramp, this);
+    treeState.addParameterListener(sMix, this);
+    treeState.addParameterListener(sDamp, this);
+    treeState.addParameterListener(sHighPassFreq, this);
+    treeState.addParameterListener(sPrePost, this);
+    treeState.addParameterListener(sBypass, this);
+    treeState.addParameterListener(sLowpass, this);
     
 }
 
 ReverbZenAudioProcessor::~ReverbZenAudioProcessor()
 {
-    treeState.removeParameterListener("Reverb", this);
-    treeState.removeParameterListener("PreDelay", this);
-    treeState.removeParameterListener("ErDelay", this);
-    treeState.removeParameterListener("Eramp", this);
-    treeState.removeParameterListener("Mix", this);
-    treeState.removeParameterListener("Damp", this);
-    treeState.removeParameterListener("HighpassFreq", this);
-    treeState.removeParameterListener("Pre/Post", this);
-    treeState.removeParameterListener("Bypass", this);
-    treeState.removeParameterListener("Lowpass", this);
+    treeState.removeParameterListener(sReverb, this);
+    treeState.removeParameterListener(sPreDelay, this);
+    treeState.removeParameterListener(sErDelay, this);
+    treeState.removeParameterListener(sEramp, this);
+    treeState.removeParameterListener(sMix, this);
+    treeState.removeParameterListener(sDamp, this);
+    treeState.removeParameterListener(sHighPassFreq, this);
+    treeState.removeParameterListener(sPrePost, this);
+    treeState.removeParameterListener(sBypass, this);
+    treeState.removeParameterListener(sLowpass, this);
 }
 juce::AudioProcessorValueTreeState::ParameterLayout
 ReverbZenAudioProcessor::createParameterLayout()
 {
     std::vector <std::unique_ptr<juce::RangedAudioParameter>> params;
-    auto pReverb = (std::make_unique<juce::AudioParameterFloat>("Reverb",
-                                                            "Reverb",0.01f,1.f,0.75f));
-    auto pPreDelay = (std::make_unique<juce::AudioParameterFloat>("PreDelay",
-                                                            "PreDelay",0.01f,1.f,0.1f));
-    auto pLowpass = (std::make_unique<juce::AudioParameterFloat>("Lowpass",
-                                                            "Lowpass",0.01f,1.f,0.5f));
+    auto pReverb = (std::make_unique<juce::AudioParameterFloat>(sReverb,
+                                                            sReverb,0.01f,1.f,0.75f));
+    auto pPreDelay = (std::make_unique<juce::AudioParameterFloat>(sPreDelay,
+                                                            sPreDelay,0.01f,1.f,0.1f));
+    auto pLowpass = (std::make_unique<juce::AudioParameterFloat>(sLowpass,
+                                                                 sLowpass,0.01f,1.f,0.5f));
     
-    auto pErDelay = (std::make_unique<juce::AudioParameterFloat>("ErDelay",
-                                                            "ErDelay",0.01f,1.f,0.1f));
-    auto pEramp = (std::make_unique<juce::AudioParameterFloat>("Eramp",
-                                                            "Eramp",0.0f,1.f,0.1f));
-    auto pMix = (std::make_unique<juce::AudioParameterFloat>("Mix",
-                                                            "Mix",0.00f,1.f,0.75f));
-    auto pDamp = (std::make_unique<juce::AudioParameterFloat>("Damp",
-                                                            "Damp",0.01f,1.f,0.67f));
+    auto pErDelay = (std::make_unique<juce::AudioParameterFloat>(sErDelay,
+                                                                 sErDelay,0.01f,1.f,0.1f));
+    auto pEramp = (std::make_unique<juce::AudioParameterFloat>(sEramp,
+                                                               sEramp,0.0f,1.f,0.1f));
+    auto pMix = (std::make_unique<juce::AudioParameterFloat>(sMix,
+                                                            sMix,0.00f,1.f,0.75f));
+    auto pDamp = (std::make_unique<juce::AudioParameterFloat>(sDamp,
+                                                              sDamp,0.01f,1.f,0.67f));
     
-    auto pHighPassFreq(std::make_unique<juce::AudioParameterInt>("HighpassFreq","HighpassFreq", 20,20000,5000));
+    auto pHighPassFreq(std::make_unique<juce::AudioParameterInt>(sHighPassFreq,sHighPassFreq, 20,20000,5000));
     
-    auto pRouting(std::make_unique<juce::AudioParameterInt>("Pre/Post","Pre/Post", 0, 1, 0));
+    auto pRouting(std::make_unique<juce::AudioParameterInt>(sPrePost,sPrePost, 0, 1, 0));
     
-    auto pBypass(std::make_unique<juce::AudioParameterInt>("Bypass","Bypass", 0, 1 ,0));
+    auto pBypass(std::make_unique<juce::AudioParameterInt>(sBypass,sBypass, 0, 1 ,0));
     
     params.push_back(std::move(pReverb));
     params.push_back(std::move(pPreDelay));
@@ -91,32 +91,32 @@ ReverbZenAudioProcessor::createParameterLayout()
 
 void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, float newValue)
 {
-    if (paramterID == "Reverb")
+    if (paramterID == sReverb)
     {
         fUI->setParamValue("decaydelay", newValue);
     }
-    if (paramterID == "Mix")
+    if (paramterID == sMix)
     {
         fUI->setParamValue("delaywet", newValue);
     }
-    if (paramterID == "Damp")
+    if (paramterID == sDamp)
     {
         fUI->setParamValue("damp", newValue);
     }
-    if (paramterID == "PreDelay")
+    if (paramterID == sPreDelay)
     {
         fUI->setParamValue("predelay", newValue);
     }
-    if (paramterID == "Eramp")
+    if (paramterID == sEramp)
     {
         fUI->setParamValue("eramp", newValue);
     }
-    if (paramterID == "ErDelay")
+    if (paramterID == sErDelay)
     {
         fUI->setParamValue("erdelay", newValue);
     }
     
-    if (paramterID == "Pre/Post")
+    if (paramterID == sPrePost)
     {
         if (newValue == 0)
         {
@@ -129,7 +129,7 @@ void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, f
         }
     }
     
-    if (paramterID == "Bypass")
+    if (paramterID == sBypass)
     {
         if (newValue == 0)
         {
@@ -149,12 +149,12 @@ void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, f
         }
         
     }
-    if(paramterID == "HighpassFreq")
+    if(paramterID == sHighPassFreq)
     {
         fUI->setParamValue("highpasscutoff", newValue);
     }
     
-    if(paramterID == "Lowpass")
+    if(paramterID == sLowpass)
     {
         fUI->setParamValue("lowpassfc", newValue);
     }
@@ -165,38 +165,39 @@ void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, f
 void ReverbZenAudioProcessor::updateParameters()
 {
     
-    fUI->setParamValue("decaydelay", treeState.getRawParameterValue("Reverb")->load());
-    fUI->setParamValue("delaywet", treeState.getRawParameterValue("Mix")->load());
-    fUI->setParamValue("damp", treeState.getRawParameterValue("Damp")->load());
-    fUI->setParamValue("predelay", treeState.getRawParameterValue("PreDelay")->load());
-    fUI->setParamValue("eramp", treeState.getRawParameterValue("Eramp")->load());
-    fUI->setParamValue("erdelay", treeState.getRawParameterValue("ErDelay")->load());
-    if(treeState.getRawParameterValue("Pre/Post")->load() == 0)
+    fUI->setParamValue("decaydelay", treeState.getRawParameterValue(sReverb)->load());
+    fUI->setParamValue("delaywet", treeState.getRawParameterValue(sMix)->load());
+    fUI->setParamValue("damp", treeState.getRawParameterValue(sDamp)->load());
+    fUI->setParamValue("predelay", treeState.getRawParameterValue(sPreDelay)->load());
+    fUI->setParamValue("eramp", treeState.getRawParameterValue(sEramp)->load());
+    fUI->setParamValue("erdelay", treeState.getRawParameterValue(sErDelay)->load());
+    fUI->setParamValue("lowpassfc", treeState.getRawParameterValue(sLowpass)->load());
+    if(treeState.getRawParameterValue(sPrePost)->load() == 0)
     {
         fUI->setParamValue("mixhighpassin", 1);
         fUI->setParamValue("mixhighpassout", 0);
-    } else if (treeState.getRawParameterValue("Pre/Post")->load() == 1)
+    } else if (treeState.getRawParameterValue(sPrePost)->load() == 1)
     {
         fUI->setParamValue("mixhighpassin", 0);
         fUI->setParamValue("mixhighpassout",1);
     }
-    if (treeState.getRawParameterValue("Bypass")->load() == 0)
+    if (treeState.getRawParameterValue(sBypass)->load() == 0)
     {
-        if(treeState.getRawParameterValue("Pre/Post")->load() == 0)
+        if(treeState.getRawParameterValue(sPrePost)->load() == 0)
         {
             fUI->setParamValue("mixhighpassin", 1);
             fUI->setParamValue("mixhighpassout", 0);
-        } else if (treeState.getRawParameterValue("Pre/Post")->load() == 1)
+        } else if (treeState.getRawParameterValue(sPrePost)->load() == 1)
         {
             fUI->setParamValue("mixhighpassin", 0);
             fUI->setParamValue("mixhighpassout",1);
         }
-    } else if(treeState.getRawParameterValue("Bypass")->load() == 1)
+    } else if(treeState.getRawParameterValue(sBypass)->load() == 1)
     {
         fUI->setParamValue("mixhighpassin", 0);
         fUI->setParamValue("mixhighpassout", 0);
     }
-    fUI->setParamValue("highpasscutoff", treeState.getRawParameterValue("HighpassFreq")->load());
+    fUI->setParamValue("highpasscutoff", treeState.getRawParameterValue(sHighPassFreq)->load());
         
     
     
