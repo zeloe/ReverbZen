@@ -10,6 +10,8 @@
 
 #pragma once
 #include "JuceHeader.h"
+
+// check this video https://www.youtube.com/watch?v=SLpeh-q3oIE how to create our own
 namespace juce
 {
 class Zen_GreenKnob : public LookAndFeel_V4

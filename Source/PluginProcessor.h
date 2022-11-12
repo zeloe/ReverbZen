@@ -14,7 +14,9 @@
 //==============================================================================
 /**
 */
-class ReverbZenAudioProcessor  : public juce::AudioProcessor, public juce::AudioProcessorValueTreeState::Listener
+class ReverbZenAudioProcessor  : public juce::AudioProcessor,
+// listeners for parameters
+public juce::AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -53,11 +55,16 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    // create treestate
     juce::AudioProcessorValueTreeState treeState;
 private:
+    // create parameter layout
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    // listener function for parameters
     void parameterChanged(const juce::String& parameterID, float newValue) override;
+    // update parameters in prepare to play
     void updateParameters ();
+    // faust related variables
     MapUI* fUI;
     dsp* fDSP;
     float **inputs;

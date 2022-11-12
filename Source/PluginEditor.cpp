@@ -12,6 +12,7 @@
 //==============================================================================
 ReverbZenAudioProcessorEditor::ReverbZenAudioProcessorEditor (ReverbZenAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
+// init params
 decayKnob("Decay", 0, 1, 0.01, 0),
 mixKnob("Mix", 0, 1, 0.01, 0),
 erampKnob("Eramp", 0, 1, 0.01, 0),
@@ -22,6 +23,7 @@ erAmpAttach(audioProcessor.treeState, sEramp, erampKnob),
 highPassAttach(audioProcessor.treeState, sHighPassFreq, highPassKnob),
 bypassAttach(audioProcessor.treeState, sBypass, bypassButton),
 prePostAttach(audioProcessor.treeState, sPrePost, prepostButton),
+// long constructor I maybe I change this
 rv1(juce::Colours::red,rv1SetOffsetX,rv1AddOffsetX,rv1offsetY,rv1AddOffsetY,audioProcessor.treeState.getParameter(sPreDelay),audioProcessor.treeState.getParameter(sLowpass)),
 rv2(juce::Colours::green,rv2SetOffsetX,rv2AddOffsetX,rv2offsetY,rv2AddOffsetY,audioProcessor.treeState.getParameter(sErDelay),audioProcessor.treeState.getParameter(sDamp))
 {
@@ -96,6 +98,7 @@ void ReverbZenAudioProcessorEditor::paint (juce::Graphics& g)
 
 void ReverbZenAudioProcessorEditor::resized()
 {
+    // get bounds and scale them to resize window and keep aspect ratio
     const int offsetW = getLocalBounds().getWidth();
     const int offsetH3 =  getLocalBounds().getHeight() / 10;
     const int offsetW3 = offsetW / 10;

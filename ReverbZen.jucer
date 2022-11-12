@@ -16,10 +16,9 @@
       </GROUP>
       <GROUP id="{EFA99DDB-3730-F8EC-F918-C337A35029F6}" name="ReverbVisualisation">
         <FILE id="Umk8FU" name="Points.h" compile="0" resource="0" file="Source/Points.h"/>
-        <FILE id="nYQyqp" name="Rectangle.h" compile="0" resource="0" file="Source/Rectangle.h"/>
         <FILE id="pHHKny" name="ReverbVisual.h" compile="0" resource="0" file="Source/ReverbVisual.h"/>
       </GROUP>
-      <GROUP id="{E64C6341-CAAE-AD23-ADAD-7BBE1F9D2B96}" name="CustonKnobs">
+      <GROUP id="{E64C6341-CAAE-AD23-ADAD-7BBE1F9D2B96}" name="CustomKnobs">
         <FILE id="sLRGpd" name="Zen_Knob.cpp" compile="1" resource="0" file="Source/Zen_Knob.cpp"/>
         <FILE id="tLizjY" name="Zen_Knob.h" compile="0" resource="0" file="Source/Zen_Knob.h"/>
         <FILE id="YvByff" name="Zen_LookAndFeel.cpp" compile="1" resource="0"

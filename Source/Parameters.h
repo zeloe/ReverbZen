@@ -10,7 +10,7 @@
 
 #pragma once
 #import "JuceHeader.h"
-
+// Parameter Defines to avoid typos
 const juce::String sReverb = "Reverb";
 const juce::String sPreDelay = "PreDelay";
 const juce::String sLowpass = "Lowpass";

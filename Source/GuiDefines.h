@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+// defining offsets for the reverbs
 const  float  rv1SetOffsetX [8]
 {
     0.51,

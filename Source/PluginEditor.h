@@ -35,8 +35,7 @@ private:
     juce::AudioProcessorValueTreeState::SliderAttachment decayAttach, mixAttach,erAmpAttach,highPassAttach;
     juce::ToggleButton bypassButton, prepostButton;
     juce::AudioProcessorValueTreeState::ButtonAttachment bypassAttach, prePostAttach;
-    ReverbVisual rv1,rv2;//rv3;
-    void initPoints();
+    ReverbVisual rv1,rv2;
     void timerCallback() override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ReverbZenAudioProcessorEditor)
 };

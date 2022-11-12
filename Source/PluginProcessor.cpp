@@ -23,7 +23,7 @@ ReverbZenAudioProcessor::ReverbZenAudioProcessor()
 ,treeState(*this, nullptr, "PARAMETERS", createParameterLayout())
 #endif
 {
-    aReverb = treeState.getRawParameterValue(sReverb);
+   // add listeners for each parameter
     treeState.addParameterListener(sReverb, this);
     treeState.addParameterListener(sPreDelay, this);
     treeState.addParameterListener(sErDelay, this);
@@ -39,6 +39,7 @@ ReverbZenAudioProcessor::ReverbZenAudioProcessor()
 
 ReverbZenAudioProcessor::~ReverbZenAudioProcessor()
 {
+    // remove listeners for each parameter
     treeState.removeParameterListener(sReverb, this);
     treeState.removeParameterListener(sPreDelay, this);
     treeState.removeParameterListener(sErDelay, this);
@@ -53,6 +54,8 @@ ReverbZenAudioProcessor::~ReverbZenAudioProcessor()
 juce::AudioProcessorValueTreeState::ParameterLayout
 ReverbZenAudioProcessor::createParameterLayout()
 {
+    // create parameters
+    // you could also use a array with strings and add them in a for loop
     std::vector <std::unique_ptr<juce::RangedAudioParameter>> params;
     auto pReverb = (std::make_unique<juce::AudioParameterFloat>(sReverb,
                                                             sReverb,0.01f,1.f,0.75f));
@@ -91,6 +94,7 @@ ReverbZenAudioProcessor::createParameterLayout()
 
 void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, float newValue)
 {
+    // check if parameter has changed and change value
     if (paramterID == sReverb)
     {
         fUI->setParamValue("decaydelay", newValue);
@@ -118,8 +122,10 @@ void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, f
     
     if (paramterID == sPrePost)
     {
+        // check value
         if (newValue == 0)
         {
+            //set value
             fUI->setParamValue("mixhighpassin", 1);
             fUI->setParamValue("mixhighpassout", 0);
         } else if (newValue == 1)
@@ -164,7 +170,7 @@ void ReverbZenAudioProcessor::parameterChanged(const juce::String &paramterID, f
 
 void ReverbZenAudioProcessor::updateParameters()
 {
-    
+    // listeners will only change when moved in this case you can add a function to get parameters in prepare to play
     fUI->setParamValue("decaydelay", treeState.getRawParameterValue(sReverb)->load());
     fUI->setParamValue("delaywet", treeState.getRawParameterValue(sMix)->load());
     fUI->setParamValue("damp", treeState.getRawParameterValue(sDamp)->load());
@@ -270,6 +276,7 @@ void ReverbZenAudioProcessor::changeProgramName (int index, const juce::String& 
 //==============================================================================
 void ReverbZenAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    // faust initialisation
     fDSP = new mydsp();
             fDSP->init(sampleRate);
             fUI = new MapUI();
@@ -281,6 +288,7 @@ void ReverbZenAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
                 inputs[channel] = new float[samplesPerBlock];
                 outputs[channel] = new float[samplesPerBlock];
             }
+    // update parameters
             updateParameters();
 }
 
@@ -325,15 +333,17 @@ void ReverbZenAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
             buffer.clear (i, 0, buffer.getNumSamples());
 
-
+    // get inputs
     for (int channel = 0; channel < totalNumInputChannels; ++channel) {
         for (int i = 0; i < buffer.getNumSamples(); i++) {
                 inputs[channel][i] = *buffer.getWritePointer(channel,i);
         }
     }
-
+    // compute
     fDSP->compute(buffer.getNumSamples(),inputs,outputs);
-                
+            
+    
+    // get outputs
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
         for (int i = 0; i < buffer.getNumSamples(); i++){
             *buffer.getWritePointer(channel,i) = outputs[channel][i];
