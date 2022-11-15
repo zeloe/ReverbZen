@@ -15,11 +15,11 @@ ReverbZenAudioProcessorEditor::ReverbZenAudioProcessorEditor (ReverbZenAudioProc
 // init params
 decayKnob("Decay", 0, 1, 0.01, 0),
 mixKnob("Mix", 0, 1, 0.01, 0),
-erampKnob("Eramp", 0, 1, 0.01, 0),
+widthKnob("Eramp", 0, 1, 0.01, 0),
 highPassKnob("HighPass", 20, 20000, 1, 0),
 decayAttach(audioProcessor.treeState, sReverb, decayKnob),
 mixAttach(audioProcessor.treeState, sMix, mixKnob),
-erAmpAttach(audioProcessor.treeState, sEramp, erampKnob),
+widthAttach(audioProcessor.treeState, sWidth, widthKnob),
 highPassAttach(audioProcessor.treeState, sHighPassFreq, highPassKnob),
 bypassAttach(audioProcessor.treeState, sBypass, bypassButton),
 prePostAttach(audioProcessor.treeState, sPrePost, prepostButton),
@@ -47,11 +47,11 @@ rv2(juce::Colours::green,rv2SetOffsetX,rv2AddOffsetX,rv2offsetY,rv2AddOffsetY,au
     mixLabel.attachToComponent(&mixKnob, false);
     addAndMakeVisible(&mixKnob);
     
-    erampKnob.setStyles(juce::Zen_Knob::ZenStyles::whiteknob);
-    erampKnob.setTextValueSuffix(" %");
-    erampLabel.setText("ErAmp", juce::dontSendNotification);
-    erampLabel.attachToComponent(&erampKnob, false);
-    addAndMakeVisible(&erampKnob);
+    widthKnob.setStyles(juce::Zen_Knob::ZenStyles::whiteknob);
+    widthKnob.setTextValueSuffix(" %");
+    widthLabel.setText("Width", juce::dontSendNotification);
+    widthLabel.attachToComponent(&widthKnob, false);
+    addAndMakeVisible(&widthKnob);
     
     
     
@@ -106,7 +106,7 @@ void ReverbZenAudioProcessorEditor::resized()
     rv1.setBounds(offsetW3, offsetH3, offsetW3 * 3, offsetW3 * 3);
     rv2.setBounds(offsetW3 * 2 * 3,offsetH3 , offsetW3 * 3,offsetW3 * 3);
     
-    erampKnob.setBounds(offsetKnobs , offsetH3 +offsetW3 *4, offsetKnobs, offsetKnobs);
+    widthKnob.setBounds(offsetKnobs , offsetH3 +offsetW3 *4, offsetKnobs, offsetKnobs);
     mixKnob.setBounds(offsetKnobs * 0.25 , offsetH3 +offsetW3 * 4,offsetKnobs,offsetKnobs);
     highPassKnob.setBounds(offsetKnobs * 2.1 + offsetKnobs * 0.75, offsetH3 +offsetW3 * 4, offsetKnobs, offsetKnobs);
     bypassButton.setBounds(offsetKnobs  * 2.1,  offsetH3 +offsetW3 * 4, offsetKnobs * 0.5, offsetKnobs* 0.5 );
