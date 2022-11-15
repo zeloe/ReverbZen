@@ -11,7 +11,7 @@ inside terminal launch:
 > faust -i -a faustMinimal.h reverb.dsp -o reverb.h 
 
 ## How it works
-<img width="361" alt="predelay" src="https://user-images.githubusercontent.com/54742442/201081263-fe1e42e5-5fca-48f1-995f-e41c0a991895.png">
+<img width="361" alt="predelay" src="https://user-images.githubusercontent.com/54742442/201920106-9751508a-4099-4ff4-bbad-d915a9d63bb2.png">
 
 x-axis = PreDelayDelayTime  \
 y-axis = LowpassFilterCutoffFrequency  \
@@ -26,7 +26,7 @@ Points = representation of signals
 ### Other Parameters
 
 Mix = Dry<->Wet Mix \
-Eramp = parameter for adding EarlyReflections to Output \
+Width = Mid <-> Side Mix \
 Highpass = high pass filter cutoff frequency  \
 Bypass = bypass high pass filter \
 Pre / Post = Pre or Post routing of high pass filter \
@@ -40,6 +40,6 @@ for instructions on how to integrate your code inside JUCE [FAUST_Tutorial](http
 [Made-With-Faust](https://faust.grame.fr/community/made-with-faust/)
 ## How it looks
 
-<img width="855" alt="Full" src="https://user-images.githubusercontent.com/54742442/201083605-d49d008e-1a35-48da-bace-931e8e4fe1ba.png">
+<img width="855" alt="Full" src="https://user-images.githubusercontent.com/54742442/201920268-3ac9950b-2e27-47a6-a175-31a548666332.png">
 
 
